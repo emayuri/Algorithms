@@ -15,20 +15,69 @@ namespace EmergencyVehicleDispatchingSystem
 
         static void Main(string[] args)
         {
-            //Console.WriteLine((int)EmergencyVehicles.Ambulance);
-            VehicleDetails veh = new VehicleDetails();
-            veh.FetchVehicleData();
-            //Dictionary<string, List<int>> vehicleByType = veh.FetchVehicleByType("Ambulance");
-            //veh.VehicleSelected("Ambulance", "66201", 1);
+            //populating vehicle details
+            VehicleDetails.Instance.FetchVehicleData();
+            //populating distance details
+            Distance.Instance.FetchDistanceGraph();
 
-            //ZipNodes zipNodes = new ZipNodes();
-            //zipNodes.FetchNodes();
+            Dictionary<EmergencyVehicles, string> requests = new Dictionary<EmergencyVehicles, string>();
+            Request req = new Request(1, EmergencyVehicles.Ambulance, "64122");
+            req.ProcessRequest();
+
+            Console.WriteLine("Request Id:" + req.requestId + " Vehicle type:" + req.vehicleType + " Destination zipcode:" + req.zipCode + " Vehicle Id:"
+                        + req.vehicleId + " Distance:" + req.gap);
+
+
+            //req = new Request(1, EmergencyVehicles.Ambulance, "66201");
+            //req.ProcessRequest();
+
+            //Console.WriteLine("Request Id:" + req.requestId + " Vehicle type:" + req.vehicleType + " Destination zipcode:" + req.zipCode + " Vehicle Id:"
+            //            + req.vehicleId + " Distance:" + req.gap);
+
+            //req = new Request(1, EmergencyVehicles.Ambulance, "66201");
+            //req.ProcessRequest();
+
+            //Console.WriteLine("Request Id:" + req.requestId + " Vehicle type:" + req.vehicleType + " Destination zipcode:" + req.zipCode + " Vehicle Id:"
+            //            + req.vehicleId + " Distance:" + req.gap);
+
             Console.ReadLine();
+            //string userInput = "";
+            //Console.WriteLine("Hello!");
+            //Console.WriteLine("Do you want to go ahead and request for a vehicle.(YES/NO)");
+            //while (userInput != "EXIT")
+            //{
+            //    if (Console.ReadLine().ToUpper() == "YES")
+            //    {
+            //        Console.WriteLine("Please enter you request here!");
+            //        Console.Write("VehicleType");
+            //        int vehId = int.Parse(Console.ReadLine());
+            //        EmergencyVehicles vehiclId = (EmergencyVehicles)vehId;
+
+            //        Console.WriteLine("Please enter the destination zip code");
+            //        string zipCode = Console.ReadLine().ToString();
+
+            //        Request req = new Request(1, vehiclId, zipCode);
+
+            //        req.ProcessRequest();
+
+            //        Console.WriteLine("Request Id:" + req.requestId + " Vehicle type:" + req.vehicleType + " Destination zipcode:" + req.zipCode + " Vehicle Id:"
+            //            + req.vehicleId + " Distance:" + req.gap);
+            //    }
+            //    else if (Console.ReadLine().ToUpper() == "NO")
+            //    {
+            //        Console.WriteLine("Thanks you!");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Please enter valid data!");
+            //        userInput = Console.ReadLine();
+            //    }
+            //}
         }
 
         static void XmlReadData()
         {
-            XmlDataDocument xmlDoc = new XmlDataDocument();
+            XmlDocument xmlDoc = new XmlDocument();
             XmlNodeList xmlNodeList;
             
             FileStream fs = new FileStream(@"..\\..\\VehicleDetails.xml", FileMode.Open, FileAccess.Read);

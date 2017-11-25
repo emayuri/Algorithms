@@ -2,67 +2,152 @@
 <VehicleDetails>
   <Vehicle>
     <Id>1</Id>
-    <Type>2</Type>
-    <ZipCode>66201</ZipCode>
+    <Type>1</Type>
+    <ZipCode>64101</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>2</Id>
-    <Type>3</Type>
-    <ZipCode>66201</ZipCode>
+    <Type>2</Type>
+    <ZipCode>64101</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>3</Id>
-    <Type>2</Type>
-    <ZipCode>66202</ZipCode>
+    <Type>3</Type>
+    <ZipCode>64102</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>4</Id>
-    <Type>3</Type>
-    <ZipCode>66202</ZipCode>
+    <Type>2</Type>
+    <ZipCode>64105</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>5</Id>
     <Type>1</Type>
-    <ZipCode>66203</ZipCode>
+    <ZipCode>64106</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>6</Id>
-    <Type>2</Type>
-    <ZipCode>66203</ZipCode>
+    <Type>3</Type>
+    <ZipCode>64106</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>7</Id>
     <Type>2</Type>
-    <ZipCode>66204</ZipCode>
+    <ZipCode>64108</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>8</Id>
-    <Type>2</Type>
-    <ZipCode>66205</ZipCode>
+    <Type>1</Type>
+    <ZipCode>64109</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>9</Id>
     <Type>3</Type>
-    <ZipCode>66206</ZipCode>
+    <ZipCode>64110</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>10</Id>
-    <Type>1</Type>
-    <ZipCode>66206</ZipCode>
+    <Type>3</Type>
+    <ZipCode>64111</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>11</Id>
     <Type>2</Type>
-    <ZipCode>66207</ZipCode>
+    <ZipCode>64112</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>12</Id>
-    <Type>3</Type>
-    <ZipCode>66208</ZipCode>
+    <Type>1</Type>
+    <ZipCode>64113</ZipCode>
   </Vehicle>
   <Vehicle>
     <Id>13</Id>
     <Type>3</Type>
-    <ZipCode>66209</ZipCode>
+    <ZipCode>64114</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>14</Id>
+    <Type>2</Type>
+    <ZipCode>64116</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>15</Id>
+    <Type>1</Type>
+    <ZipCode>64117</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>16</Id>
+    <Type>2</Type>
+    <ZipCode>64118</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>17</Id>
+    <Type>2</Type>
+    <ZipCode>64118</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>18</Id>
+    <Type>1</Type>
+    <ZipCode>64119</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>19</Id>
+    <Type>2</Type>
+    <ZipCode>64119</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>20</Id>
+    <Type>2</Type>
+    <ZipCode>64120</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>21</Id>
+    <Type>3</Type>
+    <ZipCode>64121</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>22</Id>
+    <Type>2</Type>
+    <ZipCode>64122</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>23</Id>
+    <Type>1</Type>
+    <ZipCode>64123</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>24</Id>
+    <Type>2</Type>
+    <ZipCode>64123</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>25</Id>
+    <Type>1</Type>
+    <ZipCode>64124</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>26</Id>
+    <Type>1</Type>
+    <ZipCode>64125</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>27</Id>
+    <Type>3</Type>
+    <ZipCode>64126</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>28</Id>
+    <Type>3</Type>
+    <ZipCode>64127</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>29</Id>
+    <Type>2</Type>
+    <ZipCode>64128</ZipCode>
+  </Vehicle>
+  <Vehicle>
+    <Id>30</Id>
+    <Type>3</Type>
+    <ZipCode>64128</ZipCode>
   </Vehicle>
 </VehicleDetails>
