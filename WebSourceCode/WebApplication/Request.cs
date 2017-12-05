@@ -18,6 +18,7 @@ namespace WebApplication
         public string zipCode;
         public int vehicleId;
         public int gap;
+        public DateTime requestTime;
 
         /// <summary>
         /// Getter and Setter for Request Id
@@ -91,6 +92,18 @@ namespace WebApplication
             set
             {
                 gap = value;
+            }
+        }
+
+        public DateTime RequestTime
+        {
+            get
+            {
+                return requestTime;
+            }
+            set
+            {
+                requestTime = value;
             }
         }
 

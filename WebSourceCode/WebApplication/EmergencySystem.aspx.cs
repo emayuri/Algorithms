@@ -10,7 +10,7 @@ namespace WebApplication
     public partial class EmergencySystem : System.Web.UI.Page
     {
         public static List<Request> requests;
-        public static Dictionary<int, DateTime> track = new Dictionary<int, DateTime>();
+        //public static Dictionary<int, DateTime> track = new Dictionary<int, DateTime>();
         public Request request;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,22 +34,22 @@ namespace WebApplication
         }
 
         /// <summary>
-        /// Function to track for how long a vehicle for servicing a request
+        /// Function to track for how long a vehicle takes for servicing a request
         /// </summary>
         void TrackRequest()
         {
             //This will take 30 minutes
             for (int i = 0; i < 360; i++)
             {
-                if (track.Count != 0)
+                if (requests.Count != 0 && requests[requests.Count - 1] != null)
                 {
-                    foreach (int requestId in track.Keys.ToList())
+                    for(int j = 0; j< requests.Count; j++)
                     {
-                        TimeSpan t = (DateTime.Now - track[requestId]);
-                        if ( t.Minutes >= 5)
+                        TimeSpan t = (DateTime.Now - requests[j].requestTime);
+                        if ( t.Minutes >= 2)
                         {
                             Delete(delete, EventArgs.Empty);
-                            track.Remove(requestId);
+                            //track.Remove(requestId);
                         }
                     }
                 }
@@ -97,6 +97,7 @@ namespace WebApplication
         {
             VehicleDetails.Instance.VehicleUnSelected(requests[0].vehicleType, requests[0].zipCode, requests[0].vehicleId);
             requests.RemoveAt(0);
+            
             if (requests.Count == 0)
             {
                 request = null;
@@ -145,8 +146,9 @@ namespace WebApplication
                     request = new Request(requestId, (EmergencyVehicles)vehicleType, zipCode);
                     if (request.Gap < int.MaxValue)
                     {
+                        request.requestTime = DateTime.Now;
                         requests.Add(request);
-                        track.Add(request.requestId, DateTime.Now);
+                        //track.Add(request.requestId, DateTime.Now);
                     }
                     else
                     {
