@@ -5,39 +5,56 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-
-using System.Threading;
-
-
-
 namespace WebApplication
 {
     public partial class EmergencySystem : System.Web.UI.Page
     {
-        public static List<Request> list;
-        public Request req;
-        Thread child1;
+        public static List<Request> requests;
+        public static Dictionary<int, DateTime> track = new Dictionary<int, DateTime>();
+        public Request request;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack && Session["EmergencySystem"] == null)
             {
                 Session["Check_Page_Refresh"] = DateTime.Now.ToString();
-                list = new List<Request>();
+                requests = new List<Request>();
                 BindGridViewData();
                 Session["EmergencySystem"] = "EmergencySystem";
 
-                //ThreadStart t1 = new ThreadStart(Delete);
-                //child1 = new Thread(t1);
-
-                //child1.Start();
+                System.Threading.Thread deleteThread = new System.Threading.Thread(TrackRequest);
+                deleteThread.Start();
             }
             else if(!IsPostBack && Session["EmergencySystem"] != null)
             {
-                Session["state"] = list;
-                GridView1.DataSource = list;
+                Session["state"] = requests;
+                GridView1.DataSource = requests;
                 GridView1.DataBind();
+            }
+        }
+
+        /// <summary>
+        /// Function to track for how long a vehicle for servicing a request
+        /// </summary>
+        void TrackRequest()
+        {
+            //This will take 30 minutes
+            for (int i = 0; i < 360; i++)
+            {
+                if (track.Count != 0)
+                {
+                    foreach (int requestId in track.Keys.ToList())
+                    {
+                        TimeSpan t = (DateTime.Now - track[requestId]);
+                        if ( t.Minutes >= 5)
+                        {
+                            Delete(delete, EventArgs.Empty);
+                            track.Remove(requestId);
+                        }
+                    }
+                }
+                System.Diagnostics.Debug.WriteLine("Task " + i + " - " + DateTime.Now);
+                System.Threading.Thread.Sleep(5000);
             }
         }
 
@@ -46,14 +63,16 @@ namespace WebApplication
             ViewState["Check_Page_Refresh"] = Session["Check_Page_Refresh"];
         }
 
+        /// <summary>
+        /// Function to bind data to grid view
+        /// </summary>
         private void BindGridViewData()
         {
-            req = null;
-            list.Add(null);
+            request = null;
+            requests.Add(null);
 
-            Session["state"] = list;
-
-            GridView1.DataSource = list;
+            Session["state"] = requests;
+            GridView1.DataSource = requests;
             GridView1.DataBind();
         }
 
@@ -69,53 +88,65 @@ namespace WebApplication
             }
         }
 
-        public void Delete()
+        /// <summary>
+        /// Function to delete a request once the processing time is crossed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Delete(object sender, EventArgs e)
         {
-            Thread.Sleep(10000);
-            VehicleDetails.Instance.VehicleUnSelected(list[0].vehicleType, list[0].zipCode, list[0].vehicleId);
-            list.RemoveAt(0);
-            if (list.Count == 0)
+            VehicleDetails.Instance.VehicleUnSelected(requests[0].vehicleType, requests[0].zipCode, requests[0].vehicleId);
+            requests.RemoveAt(0);
+            if (requests.Count == 0)
             {
-                req = null;
-                list.Add(null);
+                request = null;
+                requests.Add(null);
             }
             else
             {
-                for (int i = 0; i < list.Count; i++)
+                for (int i = 0; i < requests.Count; i++)
                 {
-                    list[i].requestId = i + 1;
+                    requests[i].requestId = i + 1;
                 }
             }
-            Session["state"] = list;
+            Session["state"] = requests;
             Session["Check_Page_Refresh"] = DateTime.Now.ToString();
-            GridView1.DataSource = list;
+            GridView1.DataSource = requests;
             GridView1.DataBind();
+            ViewState["Check_Page_Refresh"] = Session["Check_Page_Refresh"];
         }
+
+        /// <summary>
+        /// Insert a new request into list of requests maintained
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Insert(object sender, EventArgs e)
         {
             if (ViewState["Check_Page_Refresh"].ToString() == Session["Check_Page_Refresh"].ToString())
             {
                 int requestId = 0;
-                list = new List<Request>();
-                list = (List<Request>)Session["state"];
+                requests = new List<Request>();
+                requests = (List<Request>)Session["state"];
 
                 int vehicleType = ((DropDownList)GridView1.FooterRow.FindControl("ddlVehicleType")).SelectedIndex;
                 string zipCode = ((TextBox)GridView1.FooterRow.FindControl("txtZipCode")).Text;
                 if (vehicleType != 0 && !string.IsNullOrEmpty(zipCode))
                 {
-                    if (list[list.Count - 1] != null)
+                    if (requests[requests.Count - 1] != null)
                     {
-                        requestId = list.Count() + 1;
+                        requestId = requests.Count() + 1;
                     }
                     else
                     {
-                        list = new List<Request>();
+                        requests = new List<Request>();
                         requestId = 1;
                     }
-                    req = new Request(requestId, (EmergencyVehicles)vehicleType, zipCode);
-                    if (req.Gap < int.MaxValue)
+                    request = new Request(requestId, (EmergencyVehicles)vehicleType, zipCode);
+                    if (request.Gap < int.MaxValue)
                     {
-                        list.Add(req);
+                        requests.Add(request);
+                        track.Add(request.requestId, DateTime.Now);
                     }
                     else
                     {
@@ -123,23 +154,19 @@ namespace WebApplication
                     }
                     
                 }
-
-                Session["state"] = list;
-
+                Session["state"] = requests;
                 Session["Check_Page_Refresh"] = DateTime.Now.ToString();
-
-                GridView1.DataSource = list;
+                GridView1.DataSource = requests;
                 GridView1.DataBind();
                 
             }
             else
             {
-                list = (List<Request>)Session["state"];
-                GridView1.DataSource = list;
+                requests = (List<Request>)Session["state"];
+                GridView1.DataSource = requests;
                 GridView1.DataBind();
                 Response.Write("Page Refresh Detected....");
             }
         }
     }
-    
 }

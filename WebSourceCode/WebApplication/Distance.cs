@@ -34,7 +34,7 @@ namespace WebApplication
         }
 
         /// <summary>
-        /// Function to fetch distance and reachable zipcodes Data from Distance.xml document
+        /// Function to fetch distance and reachable zipcodes data from Distance.xml document
         /// </summary>
         public Dictionary<string, List<ZipNodes>> FetchDistanceGraph()
         {
@@ -73,7 +73,7 @@ namespace WebApplication
         /// Function to build graph of zipcodes
         /// </summary>
         /// <param name="zipCode"></param>
-        public void BuildGraphNodes(string zipCode)
+        private void BuildGraphNodes(string zipCode)
         {
             if (!graph.ContainsKey(zipCode))
             {
@@ -87,7 +87,7 @@ namespace WebApplication
         /// <param name="zipCode1"></param>
         /// <param name="zipCode2"></param>
         /// <param name="distance">distance between zipcode1 and zipcode2</param>
-        public void BuildGraphEdges(string zipCode1, string zipCode2, int distance)
+        private void BuildGraphEdges(string zipCode1, string zipCode2, int distance)
         {
             ZipNodes zipNode1 = new ZipNodes(zipCode2, distance);
             ZipNodes zipNode2 = new ZipNodes(zipCode1, distance);

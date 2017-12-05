@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Request Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EmergencySystem.aspx.cs" Inherits="WebApplication.EmergencySystem" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <meta http-equiv="Refresh" content="30" />
     <div class="jumbotron">
         <h1>Request Emergency Vehicle Here!</h1>
     </div>
@@ -74,7 +75,7 @@
                         <asp:Label ID="lblVehicleID" runat="server" style="margin-left: 0px; margin-right:60px" Text="TBD"></asp:Label>
                     </FooterTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Gap" SortExpression="Gap"  ControlStyle-Width="100px">
+                <asp:TemplateField HeaderText="Distance" SortExpression="Gap"  ControlStyle-Width="100px">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox5" runat="server" style="margin-left: 0px; margin-right:60px" Text='<%# Bind("gap") %>'></asp:TextBox>
                     </EditItemTemplate>
@@ -113,5 +114,5 @@
     <div style="margin-left:auto; margin-right:auto; align-content:center">
     <asp:ValidationSummary ID="ValidationSummary1" ForeColor="Red" runat="server" />
     </div>
-    <asp:Button runat="server" Text="Delete"  CausesValidation="false" />
+    <asp:Button runat="server" ID ="delete" Text="Delete" OnClick ="Delete" style="display: none;" CausesValidation="false" />
 </asp:Content>

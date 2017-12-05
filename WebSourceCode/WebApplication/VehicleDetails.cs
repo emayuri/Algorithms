@@ -8,8 +8,11 @@ namespace WebApplication
 {
     public sealed class VehicleDetails
     {
+        //Vehicle type
         public int type;
+        //Vehicle id
         public int id;
+        //Zip code from where the request is made
         public string zipCode;
         Vehicle vehicle;
 
@@ -125,10 +128,14 @@ namespace WebApplication
         /// <param name="id">Vehicle id number</param>
         public void PopulateVehicleDetails(EmergencyVehicles type, string zipCode, int id)
         {
+            //Adding vehicles as per the type of the vehicle
+            //If vehicle type is Ambulance
             if (type == EmergencyVehicles.Ambulance)
             {
+                //If vehicle type is already available, new vehicle id will be concatinated to the list
                 if (vehicleMap.ContainsKey(type))
                 {
+                    //If zip code already has same vehicle type in it. the new vehicle id will be concatinated parallel to exisisting one
                     if (vehicleMap[type].ContainsKey(zipCode))
                     {
                         List<int> ids = vehicleMap[type][zipCode];
@@ -137,6 +144,7 @@ namespace WebApplication
                         vehicle = new Vehicle(id, type, zipCode, true);
                         vehicleStatus.Add(id, vehicle);
                     }
+                    //Else new entry would be made for the zip code and vehicle will be added
                     else
                     {
                         vehicleMap[type].Add(zipCode, new List<int> { id });
@@ -144,6 +152,7 @@ namespace WebApplication
                         vehicleStatus.Add(id, vehicle);
                     }
                 }
+                //If vehicle type is not available so far. New entry will be made.
                 else
                 {
                     vehicleMap[type] = new Dictionary<string, List<int>>();
@@ -152,6 +161,7 @@ namespace WebApplication
                     vehicleStatus.Add(id, vehicle);
                 }
             }
+            //If vehicle type is Fire Truck
             else if (type == EmergencyVehicles.FireTruck)
             {
                 if (vehicleMap.ContainsKey(type))
@@ -179,6 +189,7 @@ namespace WebApplication
                     vehicleStatus.Add(id, vehicle);
                 }
             }
+            //If vehicle type is Police car
             else
             {
                 if (vehicleMap.ContainsKey(type))
@@ -256,15 +267,15 @@ namespace WebApplication
         /// <returns>returns boolean if vehicles status is changed</returns>
         public bool VehicleUnSelected(EmergencyVehicles vehicleType, string zipCode, int vehicleId)
         {
-            Dictionary<string, List<int>> vehicleDetails = new Dictionary<string, List<int>>();
-            vehicleDetails = vehicleMap[vehicleType];
-            List<int> vehicleIds = new List<int>();
-            vehicleIds = vehicleDetails[zipCode];
+            //Dictionary<string, List<int>> vehicleDetails = new Dictionary<string, List<int>>();
+            //vehicleDetails = vehicleMap[vehicleType];
+            //List<int> vehicleIds = new List<int>();
+            //vehicleIds = vehicleDetails[zipCode];
             if (vehicleId != 0)
             {
                 //vehicleStatus[vehicleId] = false;
-                vehicle = new Vehicle(vehicleId, vehicleType, zipCode, true);
-                vehicleStatus[vehicleId] = vehicle;
+                //vehicle = new Vehicle(vehicleId, vehicleType, zipCode, true);
+                vehicleStatus[vehicleId].status = true;
                 return true;
             }
             else

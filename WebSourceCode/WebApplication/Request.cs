@@ -129,7 +129,6 @@ namespace WebApplication
         /// </summary>
         private void ProcessRequest()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
             vehicleByType = VehicleDetails.Instance.FetchVehicleByType(vehicleType);
             graph = Distance.Instance.graph;
 
@@ -160,10 +159,6 @@ namespace WebApplication
                         }
                     }
                 }
-
-                watch.Stop();
-                var elapsedMs = watch.ElapsedMilliseconds;
-                Console.WriteLine(elapsedMs);
             }
             foreach (string zip in result.Keys)
             {
@@ -207,19 +202,19 @@ namespace WebApplication
             Dictionary<string, int> distance = new Dictionary<string, int>();
 
             //Sorted dictionary used in the form of a min heap
-            SortedSet<ZipNodes> minHeap = new SortedSet<ZipNodes>(new CustomComparer());
+            SortedSet<ZipNodes> sortedSet = new SortedSet<ZipNodes>(new CustomComparer());
 
             Dictionary<string, ZipNodes> trackingHashMap = new Dictionary<string, ZipNodes>();
             
             zipCodeObj = new ZipNodes(source, 0);
 
             trackingHashMap.Add(source, zipCodeObj);
-            minHeap.Add(zipCodeObj);
+            sortedSet.Add(zipCodeObj);
 
             while (distance.Count <= vertices)
             {
-                string currentZip = minHeap.ElementAt(0).zipCode;
-                int currentDistance = minHeap.ElementAt(0).distance;
+                string currentZip = sortedSet.ElementAt(0).zipCode;
+                int currentDistance = sortedSet.ElementAt(0).distance;
                 distance.Add(currentZip, currentDistance);
 
                 if (currentZip == destination)
@@ -231,7 +226,7 @@ namespace WebApplication
                     }
                 }
 
-                minHeap.Remove(trackingHashMap[currentZip]);
+                sortedSet.Remove(trackingHashMap[currentZip]);
 
                 for (int i = 0; i < graph[currentZip].Count; i++)
                 {
@@ -240,16 +235,16 @@ namespace WebApplication
                         if (!trackingHashMap.ContainsKey(graph[currentZip][i].zipCode))
                         {
                             ZipNodes newZipCodeObj = new ZipNodes(graph[currentZip][i].zipCode, graph[currentZip][i].distance + currentDistance);
-                            minHeap.Add(newZipCodeObj);
+                            sortedSet.Add(newZipCodeObj);
                             trackingHashMap.Add(graph[currentZip][i].zipCode, newZipCodeObj);
                         }
                         else
                         {
                             if (trackingHashMap[graph[currentZip][i].zipCode].distance > graph[currentZip][i].distance + currentDistance)
                             {
-                                minHeap.Remove(trackingHashMap[graph[currentZip][i].zipCode]);
+                                sortedSet.Remove(trackingHashMap[graph[currentZip][i].zipCode]);
                                 trackingHashMap[graph[currentZip][i].zipCode].distance = graph[currentZip][i].distance + currentDistance;
-                                minHeap.Add(trackingHashMap[graph[currentZip][i].zipCode]);
+                                sortedSet.Add(trackingHashMap[graph[currentZip][i].zipCode]);
                             }
                         }
                     }
